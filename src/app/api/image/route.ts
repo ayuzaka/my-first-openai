@@ -1,4 +1,6 @@
-import { OpenAIApi, Configuration, type CreateImageRequestSizeEnum } from "openai";
+import { OpenAIApi, Configuration } from "openai";
+
+import type { ImageSize } from "@/types/openai";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -8,7 +10,7 @@ const openAI = new OpenAIApi(configuration);
 
 type Res = {
   prompt: string;
-  size: CreateImageRequestSizeEnum,
+  size: ImageSize
 };
 
 export async function POST(request: Request) {

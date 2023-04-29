@@ -1,20 +1,20 @@
 "use client";
 
 import { type FC, useState } from "react";
-import type { ChatCompletionRequestMessage, ChatCompletionRequestMessageRoleEnum } from "openai";
 import { Button } from "@/components/Button";
 import styles from "./form.module.css";
+import type { ChatMessage } from "@/types/openai";
 
 export const Form: FC = () => {
   const [currentMessage, setCurrentMessage] = useState("");
-  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
-  const updateMessages = (role: ChatCompletionRequestMessageRoleEnum, message: string) => {
+  const updateMessages = (role: ChatMessage['role'], message: string) => {
     setMessages((current) => [...current, { role, content: message }]);
   };
 
   const handleSubmit = async () => {
-    const submitMessage: ChatCompletionRequestMessage[] = [...messages, { role: "user", content: currentMessage }];
+    const submitMessage: ChatMessage [] = [...messages, { role: "user", content: currentMessage }];
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

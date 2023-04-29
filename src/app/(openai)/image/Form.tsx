@@ -1,11 +1,11 @@
 "use client";
 
 import { type FC, useState } from "react";
-import type { CreateImageRequestSizeEnum } from "openai";
 
 import { Button } from "@/components/Button";
 import styles from "./form.module.css";
 import { Select } from "@/components/Select";
+import type { ImageSize } from "@/types/openai";
 
 type Option<T> = {
   value: T;
@@ -15,11 +15,11 @@ type Option<T> = {
 export const Form: FC = () => {
   const [prompt, setPrompt] = useState("");
   const [images, setImages] = useState<string[]>([]);
-  const [size, setSize] = useState<CreateImageRequestSizeEnum>("256x256");
+  const [size, setSize] = useState<ImageSize >("256x256");
 
   const imgSize = size.split("x").map((s) => parseInt(s, 10))[0];
 
-  const sizeOptions: Option<CreateImageRequestSizeEnum>[] = [
+  const sizeOptions: Option<ImageSize>[] = [
     { value: "256x256", text: "256 x 256" },
     { value: "512x512", text: "512 x 512" },
     { value: "1024x1024", text: "1024 x 1024" },
@@ -41,7 +41,7 @@ export const Form: FC = () => {
       <form className={styles.form}>
         <textarea onChange={(e) => setPrompt(e.target.value)} value={prompt} rows={5} className={styles.textarea} />
         <div>
-          <Select options={sizeOptions} onChange={(e) => setSize(e.target.value as CreateImageRequestSizeEnum)} />
+          <Select options={sizeOptions} onChange={(e) => setSize(e.target.value as ImageSize)} />
         </div>
         <div className={styles.buttonWrap}>
           <Button onClick={handleSubmit} disabled={prompt === ""}>

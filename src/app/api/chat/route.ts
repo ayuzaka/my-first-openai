@@ -1,4 +1,6 @@
-import { Configuration, OpenAIApi, type ChatCompletionRequestMessage } from "openai";
+import { Configuration, OpenAIApi } from "openai";
+
+import type { ChatMessage } from "@/types/openai";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -8,10 +10,10 @@ const openAI = new OpenAIApi(configuration);
 
 const systemMessage = [
   { role: "system", content: "You are a helpful assistant." },
-] satisfies ChatCompletionRequestMessage[];
+] satisfies ChatMessage[];
 
 export async function POST(request: Request) {
-  const res: ChatCompletionRequestMessage[] = await request.json();
+  const res: ChatMessage [] = await request.json();
 
   const response = await openAI.createChatCompletion({
     model: "gpt-3.5-turbo",
